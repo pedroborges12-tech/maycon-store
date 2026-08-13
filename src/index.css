@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Syne', sans-serif;
+  --color-gold-300: #FCE055;
+  --color-gold-400: #E6C229;
+  --color-gold-500: #D4AF37;
+  --color-gold-600: #AA8721;
+  --color-gold-700: #7F6212;
+}
+
+/* Custom Utilities for Streetwear Dark Gold Aesthetic */
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .border-gold-glow {
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  }
+
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, #FCE055 0%, #D4AF37 60%, #AA8721 100%);
+  }
+  
+  .bg-dark-card {
+    background-color: rgba(24, 24, 27, 0.85);
+    backdrop-filter: blur(12px);
+  }
+}
+
+/* Thermal Printer Specific Styles for NFC-e Receipt Print */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .thermal-receipt-container,
+  .thermal-receipt-container * {
+    visibility: visible;
+  }
+  
+  .thermal-receipt-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}

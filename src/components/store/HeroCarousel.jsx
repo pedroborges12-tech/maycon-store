@@ -38,7 +38,7 @@ export default function HeroCarousel({ banners = [] }) {
     <div className="relative w-full overflow-hidden bg-zinc-950 border-b border-zinc-800/80">
       
       {/* Banner Container */}
-      <div className="relative min-h-[480px] sm:min-h-[560px] lg:min-h-[620px] flex items-center">
+      <div className="relative min-h-[380px] sm:min-h-[500px] lg:min-h-[620px] flex items-center">
         
         {/* Background Image with Dark Vignette Gradient */}
         <div className="absolute inset-0 z-0">
@@ -52,7 +52,7 @@ export default function HeroCarousel({ banners = [] }) {
         </div>
 
         {/* Content Box */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10 sm:py-20">
           <div className="max-w-2xl space-y-5 animate-in fade-in slide-in-from-left duration-500">
             
             {/* Dynamic Badge */}
@@ -64,7 +64,7 @@ export default function HeroCarousel({ banners = [] }) {
             )}
 
             {/* Title */}
-            <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
+            <h1 className="font-heading text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
               {currentBanner.title.split(" ").map((word, idx) => {
                 if (word.toUpperCase() === "GOLD" || word.toUpperCase() === "MS" || word.toUpperCase() === "DROP" || word.toUpperCase() === "15%" || word.toUpperCase() === "OVERSIZED") {
                   return (
@@ -78,7 +78,7 @@ export default function HeroCarousel({ banners = [] }) {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-sm sm:text-base text-zinc-300 font-medium leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-base text-zinc-300 font-medium leading-relaxed max-w-xl">
               {currentBanner.subtitle}
             </p>
 
@@ -86,7 +86,7 @@ export default function HeroCarousel({ banners = [] }) {
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <a
                 href={currentBanner.ctaLink || "#produtos"}
-                className="px-7 py-3.5 rounded-xl bg-gold-gradient hover:opacity-95 text-zinc-950 font-black text-sm uppercase tracking-wider flex items-center gap-2.5 shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-0.5"
+                className="px-5 py-3 sm:px-7 sm:py-3.5 rounded-xl bg-gold-gradient hover:opacity-95 text-zinc-950 font-black text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-0.5"
               >
                 <span>{currentBanner.ctaText || "GARANTIR MEU LOOK"}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -94,7 +94,7 @@ export default function HeroCarousel({ banners = [] }) {
 
               <a
                 href="#produtos"
-                className="px-6 py-3.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold text-sm transition-all"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold text-xs sm:text-sm transition-all"
               >
                 Ver Lançamentos
               </a>
@@ -110,17 +110,17 @@ export default function HeroCarousel({ banners = [] }) {
         <>
           <button
             onClick={handlePrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-amber-400 hover:border-amber-500/50 transition-all focus:outline-none backdrop-blur-md"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-amber-400 hover:border-amber-500/50 transition-all focus:outline-none backdrop-blur-md"
             aria-label="Banner anterior"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
           </button>
           <button
             onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-amber-400 hover:border-amber-500/50 transition-all focus:outline-none backdrop-blur-md"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-amber-400 hover:border-amber-500/50 transition-all focus:outline-none backdrop-blur-md"
             aria-label="Próximo banner"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
           </button>
 
           {/* Dots Indicator */}

@@ -128,7 +128,7 @@ export default function Footer({ onOpenSizeGuide, setIsAdminView }) {
         <div className="border-t border-zinc-900 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
           <p>© {new Date().getFullYear()} MAYCON STORE (MS). Todos os direitos reservados.</p>
           <p className="flex items-center gap-1 text-[11px]">
-            Design & Tecnologia: <span className="text-amber-400 font-semibold">Streetwear Engine MS</span>
+            Design & Tecnologia: <span className="text-amber-400 font-semibold">Borges Development</span>
           </p>
         </div>
       </div>

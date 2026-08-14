@@ -1,14 +1,20 @@
-import { INITIAL_PRODUCTS, INITIAL_BANNERS, INITIAL_COUPONS, INITIAL_ORDERS } from "../data/initialData";
+import {
+  INITIAL_PRODUCTS,
+  INITIAL_BANNERS,
+  INITIAL_COUPONS,
+  INITIAL_ORDERS,
+  INITIAL_CATEGORIES
+} from "../data/initialData";
 
 const STORAGE_KEYS = {
   PRODUCTS: "maycon_store_products",
   BANNERS: "maycon_store_banners",
   COUPONS: "maycon_store_coupons",
   ORDERS: "maycon_store_orders",
-  CART: "maycon_store_cart"
+  CART: "maycon_store_cart",
+  CATEGORIES: "maycon_store_categories"
 };
 
-// Helper for localStorage get & seed
 function getStoredData(key, initialData) {
   try {
     const item = localStorage.getItem(key);
@@ -37,12 +43,8 @@ export const storeService = {
   saveProducts: (products) => setStoredData(STORAGE_KEYS.PRODUCTS, products),
   addProduct: (product) => {
     const products = storeService.getProducts();
-    const newProduct = {
-      ...product,
-      id: `prod-${Date.now()}`
-    };
-    const updated = [newProduct, ...products];
-    setStoredData(STORAGE_KEYS.PRODUCTS, updated);
+    const newProduct = { ...product, id: `prod-${Date.now()}` };
+    setStoredData(STORAGE_KEYS.PRODUCTS, [newProduct, ...products]);
     return newProduct;
   },
   updateProduct: (updatedProduct) => {
@@ -63,12 +65,8 @@ export const storeService = {
   saveBanners: (banners) => setStoredData(STORAGE_KEYS.BANNERS, banners),
   addBanner: (banner) => {
     const banners = storeService.getBanners();
-    const newBanner = {
-      ...banner,
-      id: `banner-${Date.now()}`
-    };
-    const updated = [...banners, newBanner];
-    setStoredData(STORAGE_KEYS.BANNERS, updated);
+    const newBanner = { ...banner, id: `banner-${Date.now()}` };
+    setStoredData(STORAGE_KEYS.BANNERS, [...banners, newBanner]);
     return newBanner;
   },
   updateBanner: (updatedBanner) => {
@@ -88,13 +86,8 @@ export const storeService = {
   getCoupons: () => getStoredData(STORAGE_KEYS.COUPONS, INITIAL_COUPONS),
   addCoupon: (coupon) => {
     const coupons = storeService.getCoupons();
-    const newCoupon = {
-      ...coupon,
-      id: `coup-${Date.now()}`,
-      code: coupon.code.toUpperCase()
-    };
-    const updated = [newCoupon, ...coupons];
-    setStoredData(STORAGE_KEYS.COUPONS, updated);
+    const newCoupon = { ...coupon, id: `coup-${Date.now()}`, code: coupon.code.toUpperCase() };
+    setStoredData(STORAGE_KEYS.COUPONS, [newCoupon, ...coupons]);
     return newCoupon;
   },
   toggleCoupon: (id) => {
@@ -110,29 +103,25 @@ export const storeService = {
     const orders = storeService.getOrders();
     const randomSeq = Math.floor(10000 + Math.random() * 90000);
     const nfcKeyGen = `352608${Math.floor(10000000000000 + Math.random() * 90000000000000)}`;
-    
+
     const newOrder = {
       id: `MS-${randomSeq}`,
       date: new Date().toISOString(),
       orderStatus: "pendente",
-      paymentStatus: orderData.paymentMethod === "pix" ? "paid" : "paid", // auto simulate approval
+      paymentStatus: "paid",
       nfcKey: nfcKeyGen,
       pixCopyPaste: `00020126580014br.gov.bcb.pix0136mayconstore@pay.com5204000053039865405${orderData.total.toFixed(2)}5802BR5912MAYCON STORE6009SAO PAULO62070503***6304E8A2`,
       ...orderData
     };
 
-    const updated = [newOrder, ...orders];
-    setStoredData(STORAGE_KEYS.ORDERS, updated);
+    setStoredData(STORAGE_KEYS.ORDERS, [newOrder, ...orders]);
 
-    // Decrease product stocks accordingly
+    // Decrease product stocks
     const products = storeService.getProducts();
     const updatedProducts = products.map((p) => {
       const orderItem = orderData.items.find((item) => item.productId === p.id);
       if (orderItem) {
-        return {
-          ...p,
-          stock: Math.max(0, p.stock - orderItem.quantity)
-        };
+        return { ...p, stock: Math.max(0, p.stock - orderItem.quantity) };
       }
       return p;
     });
@@ -144,6 +133,29 @@ export const storeService = {
     const orders = storeService.getOrders();
     const updated = orders.map((o) => (o.id === orderId ? { ...o, orderStatus: newStatus } : o));
     setStoredData(STORAGE_KEYS.ORDERS, updated);
+    return updated;
+  },
+
+  // CATEGORIES
+  getCategories: () => getStoredData(STORAGE_KEYS.CATEGORIES, INITIAL_CATEGORIES),
+  addCategory: (category) => {
+    const categories = storeService.getCategories();
+    const newCat = { ...category, id: `cat-${Date.now()}` };
+    setStoredData(STORAGE_KEYS.CATEGORIES, [...categories, newCat]);
+    return newCat;
+  },
+  renameCategory: (id, newName) => {
+    const categories = storeService.getCategories();
+    const updated = categories.map((c) =>
+      c.id === id ? { ...c, name: newName } : c
+    );
+    setStoredData(STORAGE_KEYS.CATEGORIES, updated);
+    return updated;
+  },
+  deleteCategory: (id) => {
+    const categories = storeService.getCategories();
+    const updated = categories.filter((c) => c.id !== id);
+    setStoredData(STORAGE_KEYS.CATEGORIES, updated);
     return updated;
   },
 

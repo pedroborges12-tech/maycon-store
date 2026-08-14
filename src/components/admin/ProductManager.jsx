@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Plus, Edit2, Trash2, Search, Package, Check, X, Sparkles, Image as ImageIcon } from "lucide-react";
-import { CATEGORIES, SIZES } from "../store/ProductFilters";
+import { SIZES } from "../store/ProductFilters";
 
 export default function ProductManager({
   products = [],
+  categories = [],
   onAddProduct,
   onUpdateProduct,
   onDeleteProduct
 }) {
+  // Build filter tabs: all + dynamic categories
+  const categoryTabs = [
+    { id: "todas", label: "Todas" },
+    ...categories.map((c) => ({ id: c.slug, label: c.name }))
+  ];
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todas");
   const [modalOpen, setModalOpen] = useState(false);
@@ -140,7 +146,7 @@ export default function ProductManager({
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
-          {CATEGORIES.map((cat) => (
+          {categoryTabs.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
@@ -289,13 +295,14 @@ export default function ProductManager({
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-100 uppercase"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-100"
                   >
-                    <option value="camisetas">Camisetas Oversized</option>
-                    <option value="polos">Polos Piquet</option>
-                    <option value="bermudas">Bermudas Cargo</option>
-                    <option value="calcados">Tênis & Calçados</option>
-                    <option value="acessorios">Acessórios Gold</option>
+                    {categories.length === 0 && (
+                      <option value="">— Cadastre categorias primeiro —</option>
+                    )}
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.slug}>{c.name}</option>
+                    ))}
                   </select>
                 </div>
 

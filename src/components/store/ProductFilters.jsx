@@ -1,33 +1,29 @@
 import React from "react";
-import { SlidersHorizontal, Check } from "lucide-react";
-
-export const CATEGORIES = [
-  { id: "todas", label: "Todas as Peças" },
-  { id: "camisetas", label: "Camisetas Oversized" },
-  { id: "polos", label: "Polos Piquet" },
-  { id: "bermudas", label: "Bermudas Cargo" },
-  { id: "calcados", label: "Tênis & Calçados" },
-  { id: "acessorios", label: "Acessórios Gold" }
-];
+import { SlidersHorizontal } from "lucide-react";
 
 export const SIZES = ["P", "M", "G", "GG", "XGG", "38", "39", "40", "41", "42", "43", "60cm", "70cm", "Único"];
 
 export default function ProductFilters({
+  categories = [],
   selectedCategory,
   setSelectedCategory,
   selectedSize,
   setSelectedSize,
-  priceFilter,
-  setPriceFilter,
   sortBy,
   setSortBy
 }) {
+  // Build tabs: "Todas as Peças" + dynamic categories from admin
+  const tabs = [
+    { id: "todas", name: "Todas as Peças" },
+    ...categories.map((c) => ({ id: c.slug, name: c.name }))
+  ];
+
   return (
     <div className="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 sm:p-6 mb-8 space-y-6">
       
       {/* Category Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        {CATEGORIES.map((cat) => {
+        {tabs.map((cat) => {
           const isActive = selectedCategory === cat.id;
           return (
             <button
@@ -39,7 +35,7 @@ export default function ProductFilters({
                   : "bg-zinc-950 text-zinc-400 border border-zinc-800 hover:text-white hover:border-zinc-700"
               }`}
             >
-              {cat.label}
+              {cat.name}
             </button>
           );
         })}

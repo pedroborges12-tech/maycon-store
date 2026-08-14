@@ -1,10 +1,11 @@
 import React from "react";
-import { LayoutDashboard, Package, Image, ShoppingCart, Tag, Users, Store, LogOut, Sparkles } from "lucide-react";
+import { LayoutDashboard, Package, Image, ShoppingCart, Tag, FolderOpen, LogOut } from "lucide-react";
 
-export default function AdminSidebar({ activeTab, setActiveTab, onExitAdmin }) {
+export default function AdminSidebar({ activeTab, setActiveTab, onLogout }) {
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "products", label: "Gestão de Produtos", icon: Package },
+    { id: "categories", label: "Categorias", icon: FolderOpen },
     { id: "banners", label: "Banners da Hero", icon: Image, badge: "Dinâmico" },
     { id: "orders", label: "Gestão de Pedidos", icon: ShoppingCart },
     { id: "coupons", label: "Cupons de Desconto", icon: Tag },
@@ -14,7 +15,6 @@ export default function AdminSidebar({ activeTab, setActiveTab, onExitAdmin }) {
     <aside className="w-64 bg-zinc-950 border-r border-zinc-800/80 min-h-screen flex flex-col justify-between p-4 shrink-0">
       
       <div className="space-y-6">
-        
         {/* Brand Admin Logo */}
         <div className="flex items-center gap-3 px-2 py-2 border-b border-zinc-800/80 pb-4">
           <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-amber-500/50 p-1.5 flex items-center justify-center">
@@ -61,17 +61,16 @@ export default function AdminSidebar({ activeTab, setActiveTab, onExitAdmin }) {
             );
           })}
         </nav>
-
       </div>
 
-      {/* Exit Button */}
-      <div className="pt-4 border-t border-zinc-900 space-y-2">
+      {/* Logout */}
+      <div className="pt-4 border-t border-zinc-900">
         <button
-          onClick={onExitAdmin}
-          className="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-all"
+          onClick={onLogout}
+          className="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold text-red-400 hover:bg-red-950/40 transition-all"
         >
-          <Store className="w-4 h-4 text-amber-500" />
-          <span>Voltar para a Loja Pública</span>
+          <LogOut className="w-4 h-4" />
+          <span>Sair da Conta Admin</span>
         </button>
       </div>
 

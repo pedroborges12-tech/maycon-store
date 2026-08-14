@@ -370,6 +370,14 @@ export const INITIAL_ORDERS = [
   }
 ];
 
+export const INITIAL_CATEGORIES = [
+  { id: "cat-1", name: "Camisetas Oversized", slug: "camisetas" },
+  { id: "cat-2", name: "Polos Piquet", slug: "polos" },
+  { id: "cat-3", name: "Bermudas", slug: "bermudas" },
+  { id: "cat-4", name: "Calçados", slug: "calcados" },
+  { id: "cat-5", name: "Acessórios", slug: "acessorios" }
+];
+
 export const MOCK_REVIEWS = [
   {
     id: "rev-1",

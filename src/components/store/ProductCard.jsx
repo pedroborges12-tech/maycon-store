@@ -39,7 +39,7 @@ export default function ProductCard({ product, onSelectProduct, onQuickAddToCart
       {/* Image Container */}
       <div
         onClick={() => onSelectProduct(product)}
-        className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-950 cursor-pointer"
+        className="relative aspect-[3/4] sm:aspect-[4/5] w-full overflow-hidden bg-zinc-950 cursor-pointer"
       >
         <img
           src={hovered ? secondaryImage : product.images[0]}
@@ -50,17 +50,17 @@ export default function ProductCard({ product, onSelectProduct, onQuickAddToCart
         {/* Dark Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60"></div>
 
-        {/* Quick View Button Hover */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
+        {/* Quick View Button — always visible on mobile (touch), hover only on desktop */}
+        <div className="absolute inset-0 flex items-center justify-center sm:opacity-0 sm:group-hover:opacity-100 transition-opacity bg-black/30 sm:bg-black/40 sm:backdrop-blur-[2px] pointer-events-none sm:pointer-events-auto">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onSelectProduct(product);
             }}
-            className="px-4 py-2.5 bg-zinc-900/90 border border-amber-500/50 text-amber-400 text-xs font-extrabold rounded-xl flex items-center gap-2 shadow-xl hover:bg-amber-500 hover:text-zinc-950 transition-all transform hover:scale-105"
+            className="pointer-events-auto px-3 py-2 sm:px-4 sm:py-2.5 bg-zinc-900/90 border border-amber-500/50 text-amber-400 text-[10px] sm:text-xs font-extrabold rounded-xl flex items-center gap-1.5 shadow-xl hover:bg-amber-500 hover:text-zinc-950 transition-all"
           >
-            <Eye className="w-4 h-4" />
-            <span>VER DETALHES</span>
+            <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>VER</span>
           </button>
         </div>
       </div>
@@ -88,44 +88,48 @@ export default function ProductCard({ product, onSelectProduct, onQuickAddToCart
             {product.name}
           </h3>
 
-          {/* Available Sizes Badges */}
-          <div className="flex flex-wrap gap-1 mt-2">
-            {product.sizes.map((sz) => (
+          {/* Available Sizes Badges — hidden on small mobile to save space */}
+          <div className="hidden xs:flex flex-wrap gap-1 mt-1.5 sm:mt-2">
+            {product.sizes.slice(0, 4).map((sz) => (
               <span
                 key={sz}
-                className="px-1.5 py-0.5 bg-zinc-950 border border-zinc-800 rounded text-[10px] font-bold text-zinc-400"
+                className="px-1.5 py-0.5 bg-zinc-950 border border-zinc-800 rounded text-[9px] sm:text-[10px] font-bold text-zinc-400"
               >
                 {sz}
               </span>
             ))}
+            {product.sizes.length > 4 && (
+              <span className="px-1.5 py-0.5 text-[9px] font-bold text-zinc-500">+{product.sizes.length - 4}</span>
+            )}
           </div>
         </div>
 
-        {/* Pricing & Add to Cart Action */}
-        <div className="pt-2 border-t border-zinc-800/60 flex items-center justify-between">
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-extrabold text-white">
-                R$ {product.price.toFixed(2).replace(".", ",")}
-              </span>
-              {product.originalPrice && (
-                <span className="text-xs text-zinc-500 line-through">
-                  R$ {product.originalPrice.toFixed(2).replace(".", ",")}
+        <div className="pt-2 border-t border-zinc-800/60">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <div className="flex items-baseline gap-1">
+                <span className="text-sm sm:text-base font-extrabold text-white">
+                  R$ {product.price.toFixed(2).replace(".", ",")}
                 </span>
-              )}
+                {product.originalPrice && (
+                  <span className="text-[10px] text-zinc-500 line-through">
+                    R$ {product.originalPrice.toFixed(2).replace(".", ",")}
+                  </span>
+                )}
+              </div>
+              <span className="hidden sm:block text-[10px] text-emerald-400 font-semibold">
+                3x de R$ {(product.price / 3).toFixed(2).replace(".", ",")} s/ juros
+              </span>
             </div>
-            <span className="text-[10px] text-emerald-400 font-semibold block">
-              ou 3x de R$ {(product.price / 3).toFixed(2).replace(".", ",")} sem juros
-            </span>
-          </div>
 
-          <button
-            onClick={() => onQuickAddToCart(product)}
-            className="p-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-xl transition-all shadow-md shadow-amber-500/20 active:scale-95"
-            title="Adicionar ao Carrinho"
-          >
-            <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
-          </button>
+            <button
+              onClick={() => onQuickAddToCart(product)}
+              className="shrink-0 p-2 sm:p-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-xl transition-all shadow-md shadow-amber-500/20 active:scale-95"
+              title="Adicionar ao Carrinho"
+            >
+              <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+            </button>
+          </div>
         </div>
 
       </div>
